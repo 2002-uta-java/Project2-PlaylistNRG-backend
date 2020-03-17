@@ -56,9 +56,9 @@ public class RequestedTrackDaoImpl implements RequestedTrackDao {
 	@Override
 	public List<RequestedTrack> getRequestedTracksByUserId(int id) {
 		Session s = sf.getCurrentSession();
-		String sql = "select * from requested_track where employee_id = ?";
-		SQLQuery q = s.createSQLQuery(sql);
-		q.setParameter(1, id);
+		String hql = "from RequestedTrack where employee_id = :eId";
+		Query q = s.createQuery(hql);
+		q.setParameter("eId", id);
 		List<RequestedTrack> rTracks = q.list();
 		return rTracks;
 	}

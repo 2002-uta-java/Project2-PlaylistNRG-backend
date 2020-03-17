@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.revature.daos.TopTrackDao;
 import com.revature.daos.UserDao;
-import com.revature.models.RequestedTrack;
 import com.revature.models.TopTrack;
 
 @Service

@@ -24,8 +24,8 @@ public class Group implements Serializable {
 	@Column(name="group_name")
 	private String name;
 	
-	@Column(name="password")
-	private String password;
+	@Column(name="passcode")
+	private String passcode;
 	
 	@Column(name="manager_id")
 	private int managerId;
