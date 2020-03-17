@@ -2,6 +2,7 @@ package com.revature.daos;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -18,7 +19,7 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SessionFactory sf;
 
-	@Transactional(propagation=Propagation.SUPPORTS)
+	@Transactional(propagation=Propagation.SUPPORTS) // is propagation needed?
 	@Override
 	public List<User> getAllUsers() {
 		Session s = sf.getCurrentSession();
@@ -31,7 +32,11 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> getUsersByGroupId(int groupId) {
 		// TODO: groupId->userId->user
-		// might need fancy joincolumn annotations
+		// joining tables might cause mapping complications, doing it the caveman way
+		// 1. look at bridge table (group_user)
+		// 2. Gather list of users in particular groupId.
+		// 3. for each user, obtain their data, add to list.
+		// 4. return list.
 		List<User> users = null;
 		
 		
@@ -58,17 +63,19 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void updateUser(User u) {
 		Session s = sf.getCurrentSession();
-		String hql = "update User set id = :id,"
+		String hql = "update User set "
 				+ "spotify_id = :spotifyId,"
-				+ "password = :password "
 				+ "where id = :id";
-		// continuing...
+		Query query = s.createQuery(hql);
+		query.setParameter("id", u.getId());
+		query.setParameter("spotifyId", u.getSpotifyId());
+		
+		query.executeUpdate();
 	}
 
 	@Override
 	public void addUserToGroup(User u, int groupId) {
-		// TODO Auto-generated method stub
-		
+		// 
 	}
 
 	@Override

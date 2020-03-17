@@ -23,14 +23,10 @@ public class User implements Serializable {
 	@Column(name="spotify_id")
 	private int spotifyId;
 	
-	@Column(name="password")
-	private String password;
-	
-	public User(int id, int spotifyId, String password) {
+	public User(int id, int spotifyId) {
 		super();
 		this.id = id;
 		this.spotifyId = spotifyId;
-		this.password = password;
 	}
 
 	public int getId() {
@@ -49,17 +45,9 @@ public class User implements Serializable {
 		this.spotifyId = spotifyId;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", spotifyId=" + spotifyId + ", password=" + password + "]";
+		return "User [id=" + id + ", spotifyId=" + spotifyId + "]";
 	}
 	
 	
