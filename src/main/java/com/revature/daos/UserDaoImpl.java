@@ -29,6 +29,7 @@ public class UserDaoImpl implements UserDao {
 		return users;
 	}
 
+	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public User getUserById(int id) {
 		// Will return null if id not in db.
@@ -37,6 +38,7 @@ public class UserDaoImpl implements UserDao {
 		return u;
 	}
 
+	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public int createUser(User u) {
 		Session s = sf.getCurrentSession();
@@ -46,12 +48,13 @@ public class UserDaoImpl implements UserDao {
 		return pk;
 	}
 
+	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public void updateUser(User u) {
 		Session s = sf.getCurrentSession();
 		Transaction tx = s.beginTransaction();
 		String hql = "update User set "
-				+ "spotify_id = :spotifyId,"
+				+ "spotify_id = :spotifyId "
 				+ "where id = :id";
 		Query q = s.createQuery(hql);
 		q.setParameter("id", u.getId());
@@ -61,6 +64,7 @@ public class UserDaoImpl implements UserDao {
 		tx.commit();
 	}
 	
+	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public List<Integer> getUserIdsByGroup(int groupId) {
 		// Needs to be SQLquery because there's no class for the bridge table.
@@ -75,6 +79,7 @@ public class UserDaoImpl implements UserDao {
 		return userIds;
 	}
 
+	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public void addUserToGroup(User u, int groupId) {
 		Session s = sf.getCurrentSession();
@@ -87,6 +92,7 @@ public class UserDaoImpl implements UserDao {
 		tx.commit();
 	}
 
+	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public void removeUserFromGroup(User u, int groupId) {
 		Session s = sf.getCurrentSession();
