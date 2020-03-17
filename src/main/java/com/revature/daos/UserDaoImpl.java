@@ -3,6 +3,7 @@ package com.revature.daos;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -34,8 +35,11 @@ public class UserDaoImpl implements UserDao {
 		// TODO: groupId->userId->user
 		// joining tables might cause mapping complications, doing it the caveman way
 		// 1. look at bridge table (group_user)
+		// 		- "select from group_user"
 		// 2. Gather list of users in particular groupId.
+		// 		- "where group_id = groupId"
 		// 3. for each user, obtain their data, add to list.
+		// 		- .list?
 		// 4. return list.
 		List<User> users = null;
 		
@@ -63,25 +67,43 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void updateUser(User u) {
 		Session s = sf.getCurrentSession();
+		Transaction tx = s.beginTransaction();
 		String hql = "update User set "
 				+ "spotify_id = :spotifyId,"
 				+ "where id = :id";
-		Query query = s.createQuery(hql);
-		query.setParameter("id", u.getId());
-		query.setParameter("spotifyId", u.getSpotifyId());
+		Query q = s.createQuery(hql);
+		q.setParameter("id", u.getId());
+		q.setParameter("spotifyId", u.getSpotifyId());
 		
-		query.executeUpdate();
+		q.executeUpdate();
+		tx.commit();
 	}
 
 	@Override
 	public void addUserToGroup(User u, int groupId) {
-		// 
+		// Needs to be SQLquery because there's no class for the bridge table.
+		// Hibernate doesn't know that the bridge table (group_user) exists.
+		// Perhaps this can still be done in HQL, but whatever.
+		Session s = sf.getCurrentSession();
+		Transaction tx = s.beginTransaction();
+		String sql = "insert into group_user (group_id, user_id) values (?, ?)";
+		SQLQuery q = s.createSQLQuery(sql);
+		q.setParameter(1, groupId);
+		q.setParameter(2, u.getId());
+		q.executeUpdate();
+		tx.commit();
 	}
 
 	@Override
 	public void removeUserFromGroup(User u, int groupId) {
-		// TODO Auto-generated method stub
-		
+		Session s = sf.getCurrentSession();
+		Transaction tx = s.beginTransaction();
+		String sql = "delete from group_user where group_id = ? and user_id = ?";
+		SQLQuery q = s.createSQLQuery(sql);
+		q.setParameter(1, groupId);
+		q.setParameter(2, u.getId());
+		q.executeUpdate();
+		tx.commit();
 	}
 	
 }
