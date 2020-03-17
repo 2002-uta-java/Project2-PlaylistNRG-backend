@@ -29,24 +29,6 @@ public class UserDaoImpl implements UserDao {
 		return users;
 	}
 
-	@Transactional(propagation=Propagation.SUPPORTS)
-	@Override
-	public List<User> getUsersByGroupId(int groupId) {
-		// TODO: groupId->userId->user
-		// joining tables might cause mapping complications, doing it the caveman way
-		// 1. look at bridge table (group_user)
-		// 		- "select from group_user"
-		// 2. Gather list of users in particular groupId.
-		// 		- "where group_id = groupId"
-		// 3. for each user, obtain their data, add to list.
-		// 		- .list?
-		// 4. return list.
-		List<User> users = null;
-		
-		
-		return users;
-	}
-
 	@Override
 	public User getUserById(int id) {
 		// Will return null if id not in db.
