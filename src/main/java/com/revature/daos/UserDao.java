@@ -12,6 +12,7 @@ public interface UserDao {
 	public void updateUser(User u);
 	// deleteUser?
 	
+	public List<Integer> getUserIdsByGroup(int groupId);
 	public void addUserToGroup(User u, int groupId);
 	public void removeUserFromGroup(User u, int groupId);
 	

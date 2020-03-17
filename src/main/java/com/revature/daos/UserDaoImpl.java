@@ -60,12 +60,23 @@ public class UserDaoImpl implements UserDao {
 		q.executeUpdate();
 		tx.commit();
 	}
-
+	
 	@Override
-	public void addUserToGroup(User u, int groupId) {
+	public List<Integer> getUserIdsByGroup(int groupId) {
 		// Needs to be SQLquery because there's no class for the bridge table.
 		// Hibernate doesn't know that the bridge table (group_user) exists.
 		// Perhaps this can still be done in HQL, but whatever.
+		Session s = sf.getCurrentSession();
+		List<Integer> userIds = null;
+		String sql = "select * from group_user where group_id = ?";
+		SQLQuery q = s.createSQLQuery(sql);
+		q.setParameter(1, groupId);
+		userIds = q.list();
+		return userIds;
+	}
+
+	@Override
+	public void addUserToGroup(User u, int groupId) {
 		Session s = sf.getCurrentSession();
 		Transaction tx = s.beginTransaction();
 		String sql = "insert into group_user (group_id, user_id) values (?, ?)";
