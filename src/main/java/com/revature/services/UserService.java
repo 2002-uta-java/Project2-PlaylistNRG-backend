@@ -24,7 +24,7 @@ public class UserService {
 	}
 	
 	public List<User> getUsersByGroupId(int groupId) {
-		List<Integer> userIds = uDao.getUserIdsByGroup(groupId);
+		List<Integer> userIds = uDao.getUserIdsByGroupId(groupId);
 		List<User> users = new ArrayList<>();
 		
 		if (userIds == null) {

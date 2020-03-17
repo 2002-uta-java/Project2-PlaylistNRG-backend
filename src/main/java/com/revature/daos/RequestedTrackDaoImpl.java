@@ -1,6 +1,9 @@
 package com.revature.daos;
 
+import java.util.List;
+
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -27,6 +30,7 @@ public class RequestedTrackDaoImpl implements RequestedTrackDao {
 		return pk;
 	}
 
+	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public void updateRequestedTrack(RequestedTrack r) {
 		Session s = sf.getCurrentSession();
@@ -46,7 +50,17 @@ public class RequestedTrackDaoImpl implements RequestedTrackDao {
 		
 		q.executeUpdate();
 		tx.commit();
-		
+	}
+
+	@Transactional(propagation=Propagation.SUPPORTS)
+	@Override
+	public List<RequestedTrack> getRequestedTracksByUserId(int id) {
+		Session s = sf.getCurrentSession();
+		String sql = "select * from requested_track where employee_id = ?";
+		SQLQuery q = s.createSQLQuery(sql);
+		q.setParameter(1, id);
+		List<RequestedTrack> rTracks = q.list();
+		return rTracks;
 	}
 
 }
