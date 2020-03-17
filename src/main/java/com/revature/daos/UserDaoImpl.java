@@ -2,6 +2,8 @@ package com.revature.daos;
 
 import java.util.List;
 
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -18,7 +20,7 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SessionFactory sf;
 
-	@Transactional(propagation=Propagation.SUPPORTS)
+	@Transactional(propagation=Propagation.SUPPORTS) // is propagation needed?
 	@Override
 	public List<User> getAllUsers() {
 		Session s = sf.getCurrentSession();
@@ -29,16 +31,6 @@ public class UserDaoImpl implements UserDao {
 
 	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
-	public List<User> getUsersByGroupId(int groupId) {
-		// TODO: groupId->userId->user
-		// might need fancy joincolumn annotations
-		List<User> users = null;
-		
-		
-		return users;
-	}
-
-	@Override
 	public User getUserById(int id) {
 		// Will return null if id not in db.
 		Session s = sf.getCurrentSession();
@@ -46,6 +38,7 @@ public class UserDaoImpl implements UserDao {
 		return u;
 	}
 
+	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public int createUser(User u) {
 		Session s = sf.getCurrentSession();
@@ -55,26 +48,60 @@ public class UserDaoImpl implements UserDao {
 		return pk;
 	}
 
+	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public void updateUser(User u) {
 		Session s = sf.getCurrentSession();
-		String hql = "update User set id = :id,"
-				+ "spotify_id = :spotifyId,"
-				+ "password = :password "
+		Transaction tx = s.beginTransaction();
+		String hql = "update User set "
+				+ "spotify_id = :spotifyId "
 				+ "where id = :id";
-		// continuing...
+		Query q = s.createQuery(hql);
+		q.setParameter("id", u.getId());
+		q.setParameter("spotifyId", u.getSpotifyId());
+		
+		q.executeUpdate();
+		tx.commit();
+	}
+	
+	@Transactional(propagation=Propagation.SUPPORTS)
+	@Override
+	public List<Integer> getUserIdsByGroupId(int groupId) {
+		// Needs to be SQLquery because there's no class for the bridge table.
+		// Hibernate doesn't know that the bridge table (group_user) exists.
+		// Perhaps this can still be done in HQL, but whatever.
+		Session s = sf.getCurrentSession();
+		String sql = "select * from group_user where group_id = ?";
+		SQLQuery q = s.createSQLQuery(sql);
+		q.setParameter(1, groupId);
+		List<Integer> userIds = q.list();
+		return userIds;
 	}
 
+	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public void addUserToGroup(User u, int groupId) {
-		// TODO Auto-generated method stub
-		
+		Session s = sf.getCurrentSession();
+		Transaction tx = s.beginTransaction();
+		String sql = "insert into group_user (group_id, user_id) values (?, ?)";
+		SQLQuery q = s.createSQLQuery(sql);
+		q.setParameter(1, groupId);
+		q.setParameter(2, u.getId());
+		q.executeUpdate();
+		tx.commit();
 	}
 
+	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public void removeUserFromGroup(User u, int groupId) {
-		// TODO Auto-generated method stub
-		
+		Session s = sf.getCurrentSession();
+		Transaction tx = s.beginTransaction();
+		String sql = "delete from group_user where group_id = ? and user_id = ?";
+		SQLQuery q = s.createSQLQuery(sql);
+		q.setParameter(1, groupId);
+		q.setParameter(2, u.getId());
+		q.executeUpdate();
+		tx.commit();
 	}
 	
 }
