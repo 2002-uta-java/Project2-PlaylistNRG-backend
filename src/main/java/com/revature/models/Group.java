@@ -30,11 +30,11 @@ public class Group implements Serializable {
 	@Column(name="manager_id")
 	private int managerId;
 	
-	public Group (int id, String name, String password, int managerId) {
+	public Group (int id, String name, String passcode, int managerId) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.password = password;
+		this.passcode = passcode;
 		this.managerId = managerId;
 	}
 
@@ -54,12 +54,12 @@ public class Group implements Serializable {
 		this.name = name;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPasscode() {
+		return passcode;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPasscode(String passcode) {
+		this.passcode = passcode;
 	}
 
 	public int getManagerId() {
@@ -72,7 +72,7 @@ public class Group implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Group [id=" + id + ", name=" + name + ", password=" + password + ", managerId=" + managerId + "]";
+		return "Group [id=" + id + ", name=" + name + ", passcode=" + passcode + ", managerId=" + managerId + "]";
 	}
 	
 }
