@@ -9,7 +9,7 @@ public interface RequestedTrackDao {
 	public List<RequestedTrack> getAllRequestedTracksByGroupId(int groupId);
 	// ^ this will be more complicated, involves bridge table
 	// steps: groupId -> userIds -> trackIds
-	public void createRequestedTrack(RequestedTrack r);
+	public int createRequestedTrack(RequestedTrack r);
 	public void updateRequestedTrack(RequestedTrack r);
 	
 }

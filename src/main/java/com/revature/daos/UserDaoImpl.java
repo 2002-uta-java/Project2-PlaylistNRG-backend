@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,7 +22,8 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> getAllUsers() {
 		Session s = sf.getCurrentSession();
-		List<User> users = s.createQuery("from User").list();
+		String hql = "from User";
+		List<User> users = s.createQuery(hql).list();
 		return users;
 	}
 
@@ -29,7 +31,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> getUsersByGroupId(int groupId) {
 		// TODO: groupId->userId->user
-		// might use fancy joincolumn annotations
+		// might need fancy joincolumn annotations
 		List<User> users = null;
 		
 		
@@ -45,15 +47,22 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void createUser(User u) {
-		// TODO Auto-generated method stub
-		
+	public int createUser(User u) {
+		Session s = sf.getCurrentSession();
+		Transaction tx = s.beginTransaction();
+		int pk = (int) s.save(u);
+		tx.commit();
+		return pk;
 	}
 
 	@Override
 	public void updateUser(User u) {
-		// TODO Auto-generated method stub
-		
+		Session s = sf.getCurrentSession();
+		String hql = "update User set id = :id,"
+				+ "spotify_id = :spotifyId,"
+				+ "password = :password "
+				+ "where id = :id";
+		// continuing...
 	}
 
 	@Override

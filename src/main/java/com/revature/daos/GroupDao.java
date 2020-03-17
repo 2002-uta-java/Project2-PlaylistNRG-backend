@@ -7,7 +7,7 @@ import com.revature.models.Group;
 public interface GroupDao {
 	
 	public Group getGroupById(int groupId);
-	public void createGroup(Group g);
+	public int createGroup(Group g);
 	// getAllGroups?, deleteGroup?
 
 }
