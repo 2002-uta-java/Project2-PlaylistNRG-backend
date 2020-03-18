@@ -28,11 +28,11 @@ public class User implements Serializable {
 	@Column(name="spotify_id")
 	private String spotifyId;
 	
-	@ManyToMany(mappedBy = "groups") 
-	private List<User> users_g; 
+	@ManyToMany(mappedBy = "users_g")
+	private List<Group> groups; 
 	
-	@ManyToMany(mappedBy = "top_tracks") 
-	private List<User> users_t; 
+	@ManyToMany(mappedBy = "users_t") 
+	private List<TopTrack> top_tracks; 
 	
 	public User() {
 		super();
