@@ -6,27 +6,30 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.revature.daos.UserDao;
+import com.revature.models.Group;
+import com.revature.models.RequestedTrack;
+import com.revature.models.TopTrack;
 import com.revature.models.User;
+import com.revature.services.GroupService;
+import com.revature.services.RequestedTrackService;
+import com.revature.services.TopTrackService;
+import com.revature.services.UserService;
 
 public class Driver {
 	
 	public static void main(String[] args) {
-		System.out.println("booting app...");
 		
 		ApplicationContext ac = new ClassPathXmlApplicationContext("beans.xml");
 		
-		System.out.println("after ac");
+//		UserService uServ = (UserService) ac.getBean("userService");
 		
-		UserDao uDao = (UserDao) ac.getBean("userDaoImpl");
-		
-		System.out.println("before new_user");
-		User u1 = new User(1, "randomId");
-		
-		uDao.createUser(u1);
-		List<User> users = uDao.getAllUsers();
-		for(User u: users) {
-			System.out.println(u);
-		}
+		// Test code
+//		User u1 = new User(1, "randomId");
+//		uServ.createUser(u1);
+//		List<User> users = uServ.getAllUsers();
+//		for(User u: users) {
+//			System.out.println(u);
+//		}
 		
 	}
 

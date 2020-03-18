@@ -15,9 +15,9 @@
 	
 	<!-- define three beans we need for spring orm -->
 	<bean id="ourDataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="url" value="jdbc:postgresql://playlistnrg-database1.ccxwce3xvhgy.us-east-2.rds.amazonaws.com:5432/postgres"></property>
-		<property name="username" value="postgres"></property>
-		<property name="password" value="Boombox87+"></property>
+		<property name="url" value="jdbc:postgresql://java-2002-ndesmorn.c5bbve4bauny.us-east-2.rds.amazonaws.com:5432/postgres"></property>
+		<property name="username" value="ndesmorn"></property>
+		<property name="password" value="p4sswordndesmorn"></property>
 		<property name="driverClassName" value="org.postgresql.Driver"></property>
 	</bean>
 	
@@ -28,7 +28,7 @@
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
 		</property>
 	</bean>
