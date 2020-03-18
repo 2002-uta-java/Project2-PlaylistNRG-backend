@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.revature.daos.RequestedTrackDao;
 import com.revature.daos.UserDao;
 import com.revature.models.RequestedTrack;
 
+@Service
 public class RequestedTrackService {
 	
 	@Autowired

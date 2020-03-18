@@ -25,7 +25,7 @@ public class TopTrackDaoImpl implements TopTrackDao {
 		Session s = sf.getCurrentSession();
 		String sql = "select * from employee_top_track where employee_id = ?";
 		SQLQuery q = s.createSQLQuery(sql);
-		q.setParameter(1, uId);
+		q.setParameter(0, uId);
 		List<Integer> topTrackIds = q.list();
 		return topTrackIds;
 	}
@@ -55,7 +55,7 @@ public class TopTrackDaoImpl implements TopTrackDao {
 		Transaction tx = s.beginTransaction();
 		String sql = "delete from employee_top_track where employee_id = ?";
 		SQLQuery q = s.createSQLQuery(sql);
-		q.setParameter(1, id);
+		q.setParameter(0, id);
 		q.executeUpdate();
 		tx.commit();
 	}
