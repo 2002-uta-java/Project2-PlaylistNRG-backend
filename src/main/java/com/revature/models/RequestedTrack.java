@@ -7,21 +7,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
 @Component
 @Entity
+@Table(name="requested_track")
 public class RequestedTrack implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="requested_track_id")
 	private int id;
 	
 	@Column(name="spotify_track_id")
-	private int spotifyTrackId;
+	private String spotifyTrackId;
 	
 	@Column(name="spotify_popularity")
 	private int spotifyPopularity;
@@ -32,7 +35,11 @@ public class RequestedTrack implements Serializable {
 	@Column(name="status")
 	private String status;
 	
-	public RequestedTrack(int id, int spotifyTrackId, int spotifyPopularity, int employeeId, String status) {
+	public RequestedTrack() {
+		super();
+	}
+	
+	public RequestedTrack(int id, String spotifyTrackId, int spotifyPopularity, int employeeId, String status) {
 		super();
 		this.id = id;
 		this.spotifyTrackId = spotifyTrackId;
@@ -49,11 +56,11 @@ public class RequestedTrack implements Serializable {
 		this.id = id;
 	}
 
-	public int getSpotifyTrackId() {
+	public String getSpotifyTrackId() {
 		return spotifyTrackId;
 	}
 
-	public void setSpotifyTrackId(int spotifyTrackId) {
+	public void setSpotifyTrackId(String spotifyTrackId) {
 		this.spotifyTrackId = spotifyTrackId;
 	}
 
