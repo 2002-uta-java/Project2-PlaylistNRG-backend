@@ -39,6 +39,14 @@ public class RequestedTrack implements Serializable {
 		super();
 	}
 	
+	public RequestedTrack(String spotifyTrackId, int spotifyPopularity, int employeeId, String status) {
+		super();
+		this.spotifyTrackId = spotifyTrackId;
+		this.spotifyPopularity = spotifyPopularity;
+		this.employeeId = employeeId;
+		this.status = status;
+	}
+	
 	public RequestedTrack(int id, String spotifyTrackId, int spotifyPopularity, int employeeId, String status) {
 		super();
 		this.id = id;

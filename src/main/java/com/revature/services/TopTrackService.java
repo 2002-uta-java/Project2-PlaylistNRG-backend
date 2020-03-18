@@ -53,6 +53,9 @@ public class TopTrackService {
 		return tDao.createTopTrack(t);
 	}
 	
+	public void addTopTrackByUserId(int tId, int uId) {
+		tDao.addTopTrackByUserId(tId, uId);
+	}
 	
 	public void deleteTopTracksByUserId(int id) {
 		// Note: You can delete a user/track in the toptrack_user bridge table, but cannot delete

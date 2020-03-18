@@ -70,10 +70,12 @@ public class UserDaoImpl implements UserDao {
 		// Needs to be SQLquery because there's no class for the bridge table.
 		// Hibernate doesn't know that the bridge table (group_user) exists.
 		// Perhaps this can still be done in HQL, but whatever.
+		// Update: We now have bridge tables that hibernate is aware of.
+		// But at this point, I don't feel like changing the SQL to HQL.
 		Session s = sf.getCurrentSession();
-		String sql = "select * from group_user where group_id = ?";
+		String sql = "select appUser_id from appGroup_appUser where appGroup_id = ?";
 		SQLQuery q = s.createSQLQuery(sql);
-		q.setParameter(1, groupId);
+		q.setParameter(0, groupId);
 		List<Integer> userIds = q.list();
 		return userIds;
 	}
@@ -83,10 +85,10 @@ public class UserDaoImpl implements UserDao {
 	public void addUserToGroup(User u, int groupId) {
 		Session s = sf.getCurrentSession();
 		Transaction tx = s.beginTransaction();
-		String sql = "insert into group_user (group_id, user_id) values (?, ?)";
+		String sql = "insert into appGroup_appUser (appUser_id, appGroup_id) values (?, ?)";
 		SQLQuery q = s.createSQLQuery(sql);
+		q.setParameter(0, u.getId());
 		q.setParameter(1, groupId);
-		q.setParameter(2, u.getId());
 		q.executeUpdate();
 		tx.commit();
 	}
@@ -94,12 +96,13 @@ public class UserDaoImpl implements UserDao {
 	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public void removeUserFromGroup(User u, int groupId) {
+		// Will probably get exception if any parameters don't exist in the table.
 		Session s = sf.getCurrentSession();
 		Transaction tx = s.beginTransaction();
-		String sql = "delete from group_user where group_id = ? and user_id = ?";
+		String sql = "delete from appGroup_appUser where appGroup_id = ? and appUser_id = ?";
 		SQLQuery q = s.createSQLQuery(sql);
-		q.setParameter(1, groupId);
-		q.setParameter(2, u.getId());
+		q.setParameter(0, groupId);
+		q.setParameter(1, u.getId());
 		q.executeUpdate();
 		tx.commit();
 	}
