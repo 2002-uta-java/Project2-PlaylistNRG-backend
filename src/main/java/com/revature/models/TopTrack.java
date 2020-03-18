@@ -44,6 +44,12 @@ private static final long serialVersionUID = 1L;
 		super();
 	}
 	
+	public TopTrack(String spotifyTrackId, int spotifyPopularity) {
+		super();
+		this.spotifyTrackId = spotifyTrackId;
+		this.spotifyPopularity = spotifyPopularity;
+	}
+	
 	public TopTrack(int id, String spotifyTrackId, int spotifyPopularity) {
 		super();
 		this.id = id;
