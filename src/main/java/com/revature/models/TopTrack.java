@@ -36,8 +36,8 @@ private static final long serialVersionUID = 1L;
 	private int spotifyPopularity;
 	
 	@ManyToMany(cascade = CascadeType.REMOVE)
-    @JoinTable(name = "employee_top_track", joinColumns = { @JoinColumn(name = "appUser_id") },
-    								inverseJoinColumns = { @JoinColumn(name = "top_track_id") })
+    @JoinTable(name = "employee_top_track", joinColumns = { @JoinColumn(name = "top_track_id") },
+    								inverseJoinColumns = { @JoinColumn(name = "appUser_id") })
     private List<User> users_t;
 	
 	public TopTrack() {

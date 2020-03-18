@@ -1,5 +1,7 @@
 package com.revature.daos;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -15,6 +17,15 @@ public class GroupDaoImpl implements GroupDao {
 	
 	@Autowired
 	private SessionFactory sf;
+	
+	@Transactional(propagation=Propagation.SUPPORTS)
+	@Override
+	public List<Group> getAllGroups() {
+		Session s = sf.getCurrentSession();
+		String hql = "from Group";
+		List<Group> groups = s.createQuery(hql).list();
+		return groups;
+	}
 
 	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override

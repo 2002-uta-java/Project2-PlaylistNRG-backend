@@ -40,7 +40,7 @@ public class Group implements Serializable {
 	private int managerId;
 	
 	@ManyToMany(cascade = CascadeType.REMOVE)
-    @JoinTable(name = "appGroup_appUser", joinColumns = { @JoinColumn(name = "appUser_id") }, inverseJoinColumns = { @JoinColumn(name = "appGroup_id") })
+    @JoinTable(name = "appGroup_appUser", joinColumns = { @JoinColumn(name = "appGroup_id") }, inverseJoinColumns = { @JoinColumn(name = "appUser_id") })
     private List<User> users_g;
 	
 	public Group() {

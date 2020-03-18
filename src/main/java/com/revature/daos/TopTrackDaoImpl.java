@@ -23,7 +23,7 @@ public class TopTrackDaoImpl implements TopTrackDao {
 	@Override
 	public List<Integer> getTopTrackIdsByUserId(int uId) {
 		Session s = sf.getCurrentSession();
-		String sql = "select top_track_id from employee_top_track where employee_id = ?";
+		String sql = "select top_track_id from employee_top_track where appUser_id = ?";
 		SQLQuery q = s.createSQLQuery(sql);
 		q.setParameter(0, uId);
 		List<Integer> topTrackIds = q.list();
@@ -50,13 +50,13 @@ public class TopTrackDaoImpl implements TopTrackDao {
 	
 	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
-	public void addTopTrackByUserId(int tId, int uId) {
+	public void addTopTrackByUserId(int tId, int uId) { //issue here
 		Session s = sf.getCurrentSession();
 		Transaction tx = s.beginTransaction();
-		String sql = "insert into employee_top_track (top_track_id, employee_id) values (?, ?)";
+		String sql = "insert into employee_top_track (appUser_id, top_track_id) values (?, ?)";
 		SQLQuery q = s.createSQLQuery(sql);
-		q.setParameter(0, tId);
-		q.setParameter(1, uId);
+		q.setParameter(0, uId);
+		q.setParameter(1, tId);
 		q.executeUpdate();
 		tx.commit();
 	}
@@ -66,7 +66,7 @@ public class TopTrackDaoImpl implements TopTrackDao {
 	public void deleteTopTracksByUserId(int id) {
 		Session s = sf.getCurrentSession();
 		Transaction tx = s.beginTransaction();
-		String sql = "delete from employee_top_track where employee_id = ?";
+		String sql = "delete from employee_top_track where appUser_id = ?";
 		SQLQuery q = s.createSQLQuery(sql);
 		q.setParameter(0, id);
 		q.executeUpdate();

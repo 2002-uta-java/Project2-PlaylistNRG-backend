@@ -85,10 +85,10 @@ public class UserDaoImpl implements UserDao {
 	public void addUserToGroup(User u, int groupId) {
 		Session s = sf.getCurrentSession();
 		Transaction tx = s.beginTransaction();
-		String sql = "insert into appGroup_appUser (appGroup_id, appUser_id) values (?, ?)";
+		String sql = "insert into appGroup_appUser (appUser_id, appGroup_id) values (?, ?)";
 		SQLQuery q = s.createSQLQuery(sql);
-		q.setParameter(0, groupId);
-		q.setParameter(1, u.getId());
+		q.setParameter(0, u.getId());
+		q.setParameter(1, groupId);
 		q.executeUpdate();
 		tx.commit();
 	}
