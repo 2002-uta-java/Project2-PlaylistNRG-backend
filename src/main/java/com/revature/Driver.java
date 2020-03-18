@@ -49,6 +49,8 @@ public class Driver {
 		// Users/Groups
 		uServ.addUserToGroup(u1, 1);
 		System.out.println(uServ.getUsersByGroupId(1));
+		uServ.removeUserFromGroup(u1, 1);
+		System.out.println(uServ.getUsersByGroupId(1));
 		
 		// Top tracks testing.
 		

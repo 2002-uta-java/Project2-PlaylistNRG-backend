@@ -23,7 +23,7 @@ public class TopTrackDaoImpl implements TopTrackDao {
 	@Override
 	public List<Integer> getTopTrackIdsByUserId(int uId) {
 		Session s = sf.getCurrentSession();
-		String sql = "select * from employee_top_track where employee_id = ?";
+		String sql = "select top_track_id from employee_top_track where employee_id = ?";
 		SQLQuery q = s.createSQLQuery(sql);
 		q.setParameter(0, uId);
 		List<Integer> topTrackIds = q.list();
@@ -46,6 +46,19 @@ public class TopTrackDaoImpl implements TopTrackDao {
 		int pk = (int) s.save(t);
 		tx.commit();
 		return pk;
+	}
+	
+	@Transactional(propagation=Propagation.SUPPORTS)
+	@Override
+	public void addTopTrackByUserId(int tId, int uId) {
+		Session s = sf.getCurrentSession();
+		Transaction tx = s.beginTransaction();
+		String sql = "insert into employee_top_track (top_track_id, employee_id) values (?, ?)";
+		SQLQuery q = s.createSQLQuery(sql);
+		q.setParameter(0, tId);
+		q.setParameter(1, uId);
+		q.executeUpdate();
+		tx.commit();
 	}
 
 	@Transactional(propagation=Propagation.SUPPORTS)

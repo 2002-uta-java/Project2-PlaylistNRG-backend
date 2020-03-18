@@ -96,6 +96,7 @@ public class UserDaoImpl implements UserDao {
 	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public void removeUserFromGroup(User u, int groupId) {
+		// Will probably get exception if any parameters don't exist in the table.
 		Session s = sf.getCurrentSession();
 		Transaction tx = s.beginTransaction();
 		String sql = "delete from appGroup_appUser where appGroup_id = ? and appUser_id = ?";
