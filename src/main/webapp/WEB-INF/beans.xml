@@ -14,16 +14,16 @@
 	
 	<!-- Enabling MVC Annotations -->
 	<mvc:annotation-driven/>
-	
+
 
 	<!-- Set up resource location and mapping   -->
 	<mvc:resources location="/WEB-INF/static" mapping="/static/**"></mvc:resources>
 	
-	<!-- enable stereotype annotations -->
-	<context:component-scan base-package="com.revature"></context:component-scan>
-
-	<!-- enable @Transactional -->
-	<tx:annotation-driven/>
+		<!-- view Resolver Bean -->
+	<bean name = "viewResolver"  class= "org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value = "/static/"></property>
+		<property name="suffix" value = ".html"></property>
+	</bean>
 	
 	<!-- define three beans we need for spring orm -->
 	<bean id="ourDataSource" class="org.apache.commons.dbcp.BasicDataSource">
@@ -45,15 +45,13 @@
 		</property>
 	</bean>
 	
+	<!-- enable @Transactional -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 		<property name="nestedTransactionAllowed" value="true"></property>
 	</bean>
 
-	<!-- view Resolver Bean -->
-	<bean name = "viewResolver"  class= "org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value = "/static/"></property>
-		<property name="suffix" value = ".html"></property>
-	</bean>
 
 </beans>
