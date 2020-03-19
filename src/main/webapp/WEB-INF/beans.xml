@@ -2,11 +2,23 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!-- enable Stereotype Annotations -->
+	<context:component-scan base-package="com.revature"></context:component-scan>
+	
+	<!-- Enabling MVC Annotations -->
+	<mvc:annotation-driven/>
+	
 
+	<!-- Set up resource location and mapping   -->
+	<mvc:resources location="/WEB-INF/static" mapping="/static/**"></mvc:resources>
+	
 	<!-- enable stereotype annotations -->
 	<context:component-scan base-package="com.revature"></context:component-scan>
 
@@ -15,9 +27,9 @@
 	
 	<!-- define three beans we need for spring orm -->
 	<bean id="ourDataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="url" value="jdbc:postgresql://java-2002-ndesmorn.c5bbve4bauny.us-east-2.rds.amazonaws.com:5432/postgres"></property>
-		<property name="username" value="ndesmorn"></property>
-		<property name="password" value="p4sswordndesmorn"></property>
+		<property name="url" value="jdbc:postgresql://playlistnrg-database1.ccxwce3xvhgy.us-east-2.rds.amazonaws.com:5432/postgres"></property>
+		<property name="username" value="postgres"></property>
+		<property name="password" value="Boombox87+"></property>
 		<property name="driverClassName" value="org.postgresql.Driver"></property>
 	</bean>
 	
@@ -38,5 +50,10 @@
 		<property name="nestedTransactionAllowed" value="true"></property>
 	</bean>
 
+	<!-- view Resolver Bean -->
+	<bean name = "viewResolver"  class= "org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value = "/static/"></property>
+		<property name="suffix" value = ".html"></property>
+	</bean>
 
 </beans>
