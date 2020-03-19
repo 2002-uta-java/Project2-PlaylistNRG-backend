@@ -114,9 +114,9 @@ public class UserDaoImpl implements UserDao {
 	public User getUserBySpotId(String spotify_id) {
 		//TODO: implement front response to multiple appUsers attached to one spotify account?
 		Session s  = sf.getCurrentSession();
-		String hql ="select * from User where spotify_id = ?";
+		String hql ="from User where spotify_id = :sid";
 		Query q = s.createQuery(hql);
-		q.setParameter(1, spotify_id);
+		q.setParameter("sid", spotify_id);
 		List<User> users = q.list();
 		
 		if (users.size() == 0) return null;
