@@ -23,6 +23,10 @@ public class UserService {
 		return uDao.getUserById(id);
 	}
 	
+	public User getUserBySpotifyId(String  spotify_id) {
+		return uDao.getUserBySpotId(spotify_id);
+	}
+	
 	public List<User> getUsersByGroupId(int groupId) {
 		List<Integer> userIds = uDao.getUserIdsByGroupId(groupId);
 		List<User> users = new ArrayList<>();

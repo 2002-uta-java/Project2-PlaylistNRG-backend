@@ -8,6 +8,7 @@ public interface UserDao {
 	
 	public List<User> getAllUsers();
 	public User getUserById(int id);
+	public User getUserBySpotId(String spotify_id);
 	public int createUser(User u);
 	public void updateUser(User u);
 	// deleteUser?
