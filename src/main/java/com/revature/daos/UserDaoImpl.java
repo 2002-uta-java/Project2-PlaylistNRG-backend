@@ -2,11 +2,13 @@ package com.revature.daos;
 
 import java.util.List;
 
+
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -105,6 +107,23 @@ public class UserDaoImpl implements UserDao {
 		q.setParameter(1, u.getId());
 		q.executeUpdate();
 		tx.commit();
+	}
+	
+	@Transactional(propagation=Propagation.SUPPORTS)
+	@Override
+	public User getUserBySpotId(String spotify_id) {
+		//TODO: implement front response to multiple appUsers attached to one spotify account?
+		Session s  = sf.getCurrentSession();
+		String hql ="from User where spotify_id = :sid";
+		Query q = s.createQuery(hql);
+		q.setParameter("sid", spotify_id);
+		List<User> users = q.list();
+		
+		if (users.size() == 0) return null;
+		else return users.get(0);
+
+		
+		
 	}
 	
 }
