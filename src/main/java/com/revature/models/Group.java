@@ -54,6 +54,12 @@ public class Group implements Serializable {
 		this.passcode = passcode;
 		this.managerId = managerId;
 	}
+	public Group (String name, String passcode, int managerId) {
+		super();
+		this.name = name;
+		this.passcode = passcode;
+		this.managerId = managerId;
+	}
 
 	public int getId() {
 		return id;

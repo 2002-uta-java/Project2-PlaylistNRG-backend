@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.revature.daos.TopTrackDao;
 import com.revature.daos.UserDao;
+import com.revature.models.Group;
 import com.revature.models.TopTrack;
 
 @Service
@@ -61,5 +62,12 @@ public class TopTrackService {
 		// In the long run, this could lead to massive unnecessary memory usage, but who cares.
 		// Fix: Function that deletes all tracks that no users refer to.
 		tDao.deleteTopTracksByUserId(id);
+	}
+
+	public List<TopTrack> getAllTopTracks() {
+		return tDao.getAllTopTracks();
+	}
+	public TopTrack getTopTrackByTrackId(int trackId) {
+		return tDao.getTopTrackByTrackId(trackId);
 	}
 }

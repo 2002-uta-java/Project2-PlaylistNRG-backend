@@ -43,6 +43,11 @@ public class User implements Serializable {
 		this.id = id;
 		this.spotifyId = spotifyId;
 	}
+	public User(String spotifyId) {
+		super();
+		this.spotifyId = spotifyId;
+	}
+
 
 	public int getId() {
 		return id;

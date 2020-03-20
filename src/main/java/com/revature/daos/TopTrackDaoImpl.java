@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.models.TopTrack;
+import com.revature.models.User;
 
 @Repository
 public class TopTrackDaoImpl implements TopTrackDao {
@@ -59,5 +60,12 @@ public class TopTrackDaoImpl implements TopTrackDao {
 		q.executeUpdate();
 		tx.commit();
 	}
-	
+	@Transactional(propagation=Propagation.SUPPORTS)
+	@Override
+	public List<TopTrack> getAllTopTracks() {
+		Session s = sf.getCurrentSession();
+		String hql = "from TopTrack";
+		List<TopTrack> topTracks = s.createQuery(hql).list();
+		return topTracks;
+	}
 }

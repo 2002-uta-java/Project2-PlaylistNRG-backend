@@ -8,6 +8,7 @@ public interface GroupDao {
 	
 	public Group getGroupById(int groupId);
 	public int createGroup(Group g);
+	public List<Group> getAllGroups();
 	// getAllGroups?, deleteGroup?
 
 }

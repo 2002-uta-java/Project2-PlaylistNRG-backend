@@ -1,5 +1,7 @@
 package com.revature.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.revature.daos.GroupDao;
@@ -16,5 +18,9 @@ public class GroupService {
 	
 	public int createGroup(Group g) {
 		return gDao.createGroup(g);
+	}
+
+	public List<Group> getAllGroups() {
+		return gDao.getAllGroups();
 	}
 }

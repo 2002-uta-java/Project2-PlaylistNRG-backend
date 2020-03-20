@@ -50,6 +50,12 @@ private static final long serialVersionUID = 1L;
 		this.spotifyTrackId = spotifyTrackId;
 		this.spotifyPopularity = spotifyPopularity;
 	}
+	
+	public TopTrack(String spotifyTrackId, int spotifyPopularity) {
+		super();
+		this.spotifyTrackId = spotifyTrackId;
+		this.spotifyPopularity = spotifyPopularity;
+	}
 
 	public int getId() {
 		return id;

@@ -36,6 +36,10 @@ public class RequestedTrackService {
 		
 		return rTracks;
 	}
+	public List<RequestedTrack> getRequestedTracksByUserId(int id) {
+		return rDao.getRequestedTracksByUserId(id);
+	}
+	
 	
 	public int createRequestedTrack(RequestedTrack r) {
 		return rDao.createRequestedTrack(r);

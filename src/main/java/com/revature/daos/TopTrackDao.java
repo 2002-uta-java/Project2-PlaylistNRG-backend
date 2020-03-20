@@ -10,5 +10,6 @@ public interface TopTrackDao {
 	public TopTrack getTopTrackByTrackId(int id);
 	public int createTopTrack(TopTrack t);
 	public void deleteTopTracksByUserId(int id);
+	public List<TopTrack> getAllTopTracks();
 	
 }
