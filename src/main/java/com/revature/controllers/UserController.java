@@ -14,29 +14,42 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Group;
 import com.revature.models.User;
 import com.revature.services.UserService;
 
 @RestController
 public class UserController {
-
+	ObjectMapper mapper = new ObjectMapper();
+	
 	@Autowired
 	private UserService uService;
 
 	//New User
 	@PostMapping("/user")
-	public ResponseEntity<User> createUser(@RequestBody String spotify_id) {
+	public ResponseEntity<String> createUser(@RequestBody String spotify_id){
 		User u = new User(spotify_id);
 		uService.createUser(u);
-		return ResponseEntity.ok().body(u);
+		try {
+			return ResponseEntity.ok().body("{ \"User\": "+mapper.writeValueAsString(u)+"}");
+		} catch (JsonProcessingException e) {
+			//return exception message on failure
+			return ResponseEntity.ok().body(e.getMessage());
+		}
 	}
 
 	//Get all users
 	@GetMapping("/user")
-	public ResponseEntity<List<User>>  getAllUsers(){
+	public ResponseEntity<String>  getAllUsers(){
 		List<User>  users = uService.getAllUsers();
-		return ResponseEntity.ok().body(users);
+		try {
+			return ResponseEntity.ok().body("{ \"Users\": "+mapper.writeValueAsString(users)+"}");
+		} catch (JsonProcessingException e) {
+			//return exception message on failure
+			return ResponseEntity.ok().body(e.getMessage());
+		}
 	}
 	
 	//Get one user by ID
@@ -44,22 +57,38 @@ public class UserController {
 	public ResponseEntity<String> getUserById(@PathVariable("appUser_id") int id) {
 		User u =  uService.getUserById(id);
 		List<Group> groups = uService.groupsByUser(u.getId());
-		return ResponseEntity.ok().body( "{ \"spotify_id\": "+"\""+u.getSpotifyId()+"\""+", \"groups\": "+groups+"}");
-
+		try {
+			return ResponseEntity.ok().body( "{ \"User\": "+mapper.writeValueAsString(u)+" , "+"\"groups\": "+mapper.writeValueAsString(groups)+"}");
+		} catch (JsonProcessingException e) {
+			//return exception message on failure
+			return ResponseEntity.ok().body(e.getMessage());
+		}
 	}
 
-	//One user by Spotify id, with asscoiated groups
+	//Get user by Spotify id, with associated groups
 	@GetMapping("/user/spot/{spotify_id}")
-	public ResponseEntity<User>  getUserBySpotifyId(@PathVariable("spotify_id") String spotify_id) {
+	public ResponseEntity<String>  getUserBySpotifyId(@PathVariable("spotify_id") String spotify_id) {
 		User u =  uService.getUserBySpotifyId(spotify_id);
-		return ResponseEntity.ok().body(u);
+		List<Group> groups = uService.groupsByUser(u.getId());
+		try {
+			return ResponseEntity.ok().body( "{ \"User\": "+mapper.writeValueAsString(u)+" , "+"\"groups\": "+mapper.writeValueAsString(groups)+"}");
+		} catch (JsonProcessingException e) {
+			//return exception message on failure
+			return ResponseEntity.ok().body(e.getMessage());
+		}
+
 	}
 
-	//One users in a group
+	//Get users in a group
 	@GetMapping("/user/g/{group_id}")
-	public ResponseEntity<List<User>> getUsersByGroupId(@PathVariable("group_id") int groupId) {
+	public ResponseEntity<String> getUsersByGroupId(@PathVariable("group_id") int groupId) {
 		List<User> users =  uService.getUsersByGroupId(groupId);
-		return ResponseEntity.ok().body(users);
+		try {
+			return ResponseEntity.ok().body("{ \"Users\": "+mapper.writeValueAsString(users)+"}");
+		} catch (JsonProcessingException e) {
+			//return exception message on failure
+			return ResponseEntity.ok().body(e.getMessage());
+		}
 	}
 
 	//Update User
