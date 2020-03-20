@@ -124,7 +124,8 @@ public class UserDaoImpl implements UserDao {
 		else return users.get(0);
 	
 	}
-
+	
+	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public List<Group> getAssociatedGroups(int id) {
 		Session s  = sf.getCurrentSession();
