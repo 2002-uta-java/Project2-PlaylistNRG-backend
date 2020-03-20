@@ -41,17 +41,18 @@ public class UserController {
 	
 	//Get one user by ID
 	@GetMapping("/user/{appUser_id}")
-	public ResponseEntity<User> getUserById(@PathVariable("appUser_id") int id) {
+	public ResponseEntity<String> getUserById(@PathVariable("appUser_id") int id) {
 		User u =  uService.getUserById(id);
-		return ResponseEntity.ok().body(u);
+		List<Group> groups = uService.groupsByUser(u.getId());
+		return ResponseEntity.ok().body( "{ \"spotify_id\": "+"\""+u.getSpotifyId()+"\""+", \"groups\": "+groups+"}");
+
 	}
 
 	//One user by Spotify id, with asscoiated groups
 	@GetMapping("/user/spot/{spotify_id}")
-	public ResponseEntity<String>  getUserBySpotifyId(@PathVariable("spotify_id") String spotify_id) {
+	public ResponseEntity<User>  getUserBySpotifyId(@PathVariable("spotify_id") String spotify_id) {
 		User u =  uService.getUserBySpotifyId(spotify_id);
-		List<Group> groups = uService.groupsByUser(u.getId());
-		return ResponseEntity.ok().body( "{ \"spotify_id\": "+"\""+u.getSpotifyId()+"\""+", \"groups\": "+groups+"}");
+		return ResponseEntity.ok().body(u);
 	}
 
 	//One users in a group
