@@ -1,4 +1,4 @@
-package com.revature;
+package com.revature.services;
 
 
 import static org.junit.Assert.assertEquals;
@@ -42,9 +42,8 @@ public class GroupServiceTest {
 	
 	@Test
 	public void getGroupByValidId() {
-		when(gd.getGroupById(1)).thenReturn(new Group("testGroup", "test", 1));
-
-		Group expected = new Group("testGroup", "test", 1);
+		when(gd.getGroupById(1)).thenReturn(new Group(1,"testGroup", "test", 1));
+		Group expected = new Group(1, "testGroup", "test", 1);
 		assertEquals(expected, gs.getGroupById(1));
 	}
 	

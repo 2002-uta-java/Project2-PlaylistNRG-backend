@@ -1,4 +1,4 @@
-package com.revature;
+package com.revature.services;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -23,7 +24,7 @@ import com.revature.services.RequestedTrackService;
 @RunWith(MockitoJUnitRunner.class)
 public class RequestedTrackServiceTest {
 	
-	private List<RequestedTrack> tracks;
+	//private List<RequestedTrack> tracks;
 	
 	@InjectMocks
 	private RequestedTrackService rts;
@@ -46,13 +47,16 @@ public class RequestedTrackServiceTest {
 	}
 	
 	@Test
-	public void getRequestedTrackByValidId() {
-		RequestedTrack track = new RequestedTrack(1, "test", 1, 1, "test");
-		tracks.add(track);
-		when(rtd.getRequestedTracksByUserId(1)).thenReturn(tracks);
-
-		List<RequestedTrack> expected = (List<RequestedTrack>) new RequestedTrack(1, "test", 1, 1, "test");
-		assertEquals(expected, rts.getRequestedTracksByUserId(1));
+	public void getRequestedTracksByValidId() {
+		RequestedTrack trackForId1 = new RequestedTrack(1, "test", 1, 1, "test");
+		List<RequestedTrack> tracksForId1 = new ArrayList<RequestedTrack>();
+		tracksForId1.add(trackForId1);
+		when(rtd.getRequestedTracksByUserId(1)).thenReturn(tracksForId1);
+		
+		RequestedTrack expectedTrack = new RequestedTrack(1, "test", 1, 1, "test");
+		List<RequestedTrack> expectedTracks = new ArrayList<RequestedTrack>();
+		expectedTracks.add(expectedTrack);
+		assertEquals(expectedTracks, rts.getRequestedTracksByUserId(1));
 	}
 	
 	@Test

@@ -1,4 +1,4 @@
-package com.revature;
+package com.revature.services;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -40,9 +40,8 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void getEmployeeByValidId() {
+	public void getUserByValidId() {
 		when(ud.getUserById(1)).thenReturn(new User(1, "test"));
-
 		User expected = new User(1, "test");
 		assertEquals(expected, us.getUserById(1));
 	}
