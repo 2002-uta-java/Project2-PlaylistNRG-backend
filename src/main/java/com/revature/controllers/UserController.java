@@ -100,11 +100,13 @@ public class UserController {
 		return ResponseEntity.ok().body("User updated!");
 	}
 	
-	//TODO: testing
+	//add user tp group
 	@PutMapping("/user/{appUser_id}")
-	public ResponseEntity<?> addUserToGroup(@PathVariable("appUser_id") int appUser_id, @RequestBody int groupId) {
+	public ResponseEntity<?> addUserToGroup(@PathVariable("appUser_id") int appUser_id, 
+			@RequestBody int groupId) 
+	{
 			User u = uService.getUserById(appUser_id);
-			if (u == null) return ResponseEntity.badRequest().body(null);
+			if (u == null) return ResponseEntity.badRequest().body("could not add user to group");
 			uService.addUserToGroup(u, groupId);
 			return ResponseEntity.ok().body(null);
 	}

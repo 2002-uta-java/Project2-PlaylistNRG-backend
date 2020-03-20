@@ -88,7 +88,7 @@ public class UserDaoImpl implements UserDao {
 	public void addUserToGroup(User u, int groupId) {
 		Session s = sf.getCurrentSession();
 		Transaction tx = s.beginTransaction();
-		String sql = "insert into appGroup_appUser (appUser_id, appGroup_id) values (?, ?)";
+		String sql = "insert into appGroup_appUser (appUser_id,appGroup_id) values (?, ?)";
 		SQLQuery q = s.createSQLQuery(sql);
 		q.setParameter(0, u.getId());
 		q.setParameter(1, groupId);
@@ -129,9 +129,9 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<Group> getAssociatedGroups(int id) {
 		Session s  = sf.getCurrentSession();
-		String hql ="from Group where id = :id";
-		Query q = s.createQuery(hql);
-		q.setParameter("id", id);
+		String sql ="select * from appGroup_appUser where appUser_id = ?";
+		SQLQuery q = s.createSQLQuery(sql);
+		q.setParameter(0, id);
 		List<Group> groups = q.list();
 		
 		if(groups.size() == 0) return null;
