@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.daos.UserDao;
+import com.revature.models.Group;
 import com.revature.models.User;
 
 @Service
@@ -39,9 +40,11 @@ public class UserService {
 				users.add(uDao.getUserById(uId));
 			}
 		}
-		
-		return users;
-		
+		return users;	
+	}
+	
+	public List<Group> groupsByUser(int id){
+		return uDao.getAssociatedGroups(id);
 	}
 	
 	public int createUser(User u) {

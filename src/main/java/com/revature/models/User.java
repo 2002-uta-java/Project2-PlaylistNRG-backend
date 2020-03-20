@@ -25,7 +25,7 @@ public class User implements Serializable {
 	@Column(name="appUser_id")
 	private int id;
 	
-	@Column(name="spotify_id")
+	@Column(name="spotify_id", unique = true, nullable = false)
 	private String spotifyId;
 	
 	@ManyToMany(mappedBy = "users_g")

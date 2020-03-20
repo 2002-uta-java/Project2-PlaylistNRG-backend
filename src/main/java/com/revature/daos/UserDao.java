@@ -2,6 +2,7 @@ package com.revature.daos;
 
 import java.util.List;
 
+import com.revature.models.Group;
 import com.revature.models.User;
 
 public interface UserDao {
@@ -16,5 +17,5 @@ public interface UserDao {
 	public List<Integer> getUserIdsByGroupId(int groupId);
 	public void addUserToGroup(User u, int groupId);
 	public void removeUserFromGroup(User u, int groupId);
-	
+	public List<Group> getAssociatedGroups(int id);
 }

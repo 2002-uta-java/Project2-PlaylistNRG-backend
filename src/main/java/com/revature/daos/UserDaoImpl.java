@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.revature.models.Group;
 import com.revature.models.User;
 
 @Repository
@@ -121,9 +122,19 @@ public class UserDaoImpl implements UserDao {
 		
 		if (users.size() == 0) return null;
 		else return users.get(0);
+	
+	}
 
+	@Override
+	public List<Group> getAssociatedGroups(int id) {
+		Session s  = sf.getCurrentSession();
+		String hql ="from Group where id = :id";
+		Query q = s.createQuery(hql);
+		q.setParameter("id", id);
+		List<Group> groups = q.list();
 		
-		
+		if(groups.size() == 0) return null;
+		else return groups;
 	}
 	
 }

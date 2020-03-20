@@ -12,12 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.models.Group;
 import com.revature.models.User;
 import com.revature.services.UserService;
 
@@ -42,7 +39,7 @@ public class UserController {
 		return ResponseEntity.ok().body(users);
 	}
 	
-	//Get one user by ID
+	//Get one user by ID, plus Associated groups
 	@GetMapping("/user/{appUser_id}")
 	public ResponseEntity<User> getUserById(@PathVariable("appUser_id") int id) {
 		User u =  uService.getUserById(id);
@@ -62,6 +59,13 @@ public class UserController {
 		List<User> users =  uService.getUsersByGroupId(groupId);
 		return ResponseEntity.ok().body(users);
 	}
+	
+//	//Get groups associated to this user
+//	@GetMapping("/user/ag/{appUser_id}")
+//	public ResponseEntity<List<Group>> getAssociatedGroups(@PathVariable("appUser_id") int appUser_id) {
+//	 List<Group> groups = uService.groupsByUser(appUser_id);
+//	 return ResponseEntity.ok().body(groups);
+//	}
 
 	//Update User
 	@PutMapping("/user/update/{appUser_id}")
