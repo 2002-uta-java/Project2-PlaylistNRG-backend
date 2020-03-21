@@ -65,4 +65,8 @@ public class TopTrackService {
 		// Fix: Function that deletes all tracks that no users refer to.
 		tDao.deleteTopTracksByUserId(id);
 	}
+	
+	public List<String> getUsersSpotifyTracks(int uid){
+		return tDao.getSpotifyTrackIdsByUserId(uid);
+	}
 }

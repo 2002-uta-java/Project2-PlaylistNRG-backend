@@ -29,6 +29,17 @@ public class TopTrackDaoImpl implements TopTrackDao {
 		List<Integer> topTrackIds = q.list();
 		return topTrackIds;
 	}
+	
+	@Transactional(propagation=Propagation.SUPPORTS)
+	@Override
+	public List<String> getSpotifyTrackIdsByUserId(int uId) {
+		Session s = sf.getCurrentSession();
+		String sql = "select a.spotify_track_id from top_track a join employee_top_track e   on a.top_track_id = e.top_track_id where e.appuser_id = ? ";
+		SQLQuery q = s.createSQLQuery(sql);
+		q.setParameter(0, uId);
+		List<String> spotify_track_ids = q.list();
+		return spotify_track_ids;
+	}
 
 	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
