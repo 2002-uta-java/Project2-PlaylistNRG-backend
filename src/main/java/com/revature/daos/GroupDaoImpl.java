@@ -45,5 +45,13 @@ public class GroupDaoImpl implements GroupDao {
 		return pk;
 	}
 	
+	@Transactional(propagation=Propagation.SUPPORTS)
+	@Override
+	public Group getGroupByPasscode(String passcode) {
+		Session s = sf.getCurrentSession();
+		Group g = (Group) s.get(Group.class, passcode);
+		return g;
+	}
+	
 	
 }
