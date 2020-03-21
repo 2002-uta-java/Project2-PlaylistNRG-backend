@@ -72,6 +72,19 @@ public class TopTrackController {
 
 		
 	}
+	
+	// Get a group's top tracks.
+	@GetMapping("/toptracks/group/{group_id}")
+	public ResponseEntity<String> getGroupTopTracks(@PathVariable("group_id)") int appGroup_id){
+		List<TopTrack> spot_ids = tService.getTopTracksByGroupId(appGroup_id);
+		
+		try {
+			return ResponseEntity.ok().body( "{ \"SpotifyTracks\": "+mapper.writeValueAsString(spot_ids)+"}");
+		} catch (JsonProcessingException e) {
+			//return exception message on failure
+			return ResponseEntity.ok().body(e.getMessage());
+		}
+	}
 
 
 }
