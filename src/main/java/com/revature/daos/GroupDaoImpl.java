@@ -2,6 +2,7 @@ package com.revature.daos;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -49,7 +50,10 @@ public class GroupDaoImpl implements GroupDao {
 	@Override
 	public Group getGroupByPasscode(String passcode) {
 		Session s = sf.getCurrentSession();
-		Group g = (Group) s.get(Group.class, passcode);
+		String hql = "from Group where passcode = :ps";
+		Query q = s.createQuery(hql);
+		q.setParameter("ps", passcode);
+		Group g  = (Group) q.list().get(0);
 		return g;
 	}
 	
