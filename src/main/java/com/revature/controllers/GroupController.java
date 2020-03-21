@@ -25,25 +25,23 @@ import com.revature.models.User;
 import com.revature.services.GroupService;
 import com.revature.services.UserService;
 
-
 @RestController
 public class GroupController {
 
 	@Autowired
 	private GroupService gService;
-	
+
 	ObjectMapper mapper = new ObjectMapper();
 
-	
-	//New Group
+	// New Group
 	@PostMapping("/group")
-	public ResponseEntity<String> newGroup(@RequestBody String object){
+	public ResponseEntity<String> newGroup(@RequestBody String object) {
 		try {
 			Group g = mapper.readValue(object, Group.class);
 			gService.createGroup(g);
-			return ResponseEntity.ok().body("{ \"Group\": "+mapper.writeValueAsString(g)+"}");
+			return ResponseEntity.ok().body("{ \"Group\": " + mapper.writeValueAsString(g) + "}");
 		} catch (JsonProcessingException e) {
-			//return exception message on failure
+			// return exception message on failure
 			return ResponseEntity.ok().body(e.getMessage());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -51,28 +49,41 @@ public class GroupController {
 		}
 	}
 
-	//Get all groups
+	// Get all groups
 	@GetMapping("/group")
-	public ResponseEntity<String> getAll(){
-		List<Group>  groups = gService.getAllGroups();
+	public ResponseEntity<String> getAll() {
+		List<Group> groups = gService.getAllGroups();
 		try {
-			return ResponseEntity.ok().body("{ \"Groups\": "+mapper.writeValueAsString(groups)+"}");
+			return ResponseEntity.ok().body("{ \"Groups\": " + mapper.writeValueAsString(groups) + "}");
 		} catch (JsonProcessingException e) {
-			//return exception message on failure
+			// return exception message on failure
 			return ResponseEntity.ok().body(e.getMessage());
 		}
-	
+
 	}
-	
-	//Get one group by id
+
+	// Get one group by id
 	@GetMapping("/group/{group_id}")
-	public ResponseEntity<String> getOne(@PathVariable int group_id){
-		Group g  = gService.getGroupById(group_id);
-		
+	public ResponseEntity<String> getOne(@PathVariable int group_id) {
+		Group g = gService.getGroupById(group_id);
+
 		try {
-			return ResponseEntity.ok().body( "{"+"\"Group\": "+mapper.writeValueAsString(g)+"}");
+			return ResponseEntity.ok().body("{" + "\"Group\": " + mapper.writeValueAsString(g) + "}");
 		} catch (JsonProcessingException e) {
-			//return exception message on failure
+			// return exception message on failure
+			return ResponseEntity.ok().body(e.getMessage());
+		}
+	}
+
+	// Get one group by passcode
+	@GetMapping("/group/pass/{passcode}")
+	public ResponseEntity<String> getByPasscode(@PathVariable String passcode) {
+		Group g = gService.getGroupByPasscode(passcode);
+
+		try {
+			return ResponseEntity.ok().body("{" + "\"Group\": " + mapper.writeValueAsString(g) + "}");
+		} catch (JsonProcessingException e) {
+			// return exception message on failure
 			return ResponseEntity.ok().body(e.getMessage());
 		}
 	}
