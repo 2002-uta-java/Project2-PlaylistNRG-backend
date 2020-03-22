@@ -15,8 +15,7 @@
 	<!-- Enabling MVC Annotations -->
 	<mvc:annotation-driven/>
 
-	<!-- Cross origin configuration -->
-	<!-- TODO: CLOSE THE BLOODY GATES ONCE IT'S DEPLOYED -->
+
 	
 
 
