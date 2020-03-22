@@ -21,8 +21,8 @@ import com.revature.models.Group;
 import com.revature.models.User;
 import com.revature.services.UserService;
 
+@CrossOrigin
 @RestController
-@CrossOrigin(origins = "*")
 public class UserController {
 	ObjectMapper mapper = new ObjectMapper();
 	
@@ -95,7 +95,7 @@ public class UserController {
 
 	//Update User
 	@PutMapping("/user/update/{appUser_id}")
-	public ResponseEntity<?>  updateUser(@PathVariable("appUser_id") int appUser_id) {
+	public ResponseEntity<?> updateUser(@PathVariable("appUser_id") int appUser_id) {
 		User u = uService.getUserById(appUser_id);
 		if (u == null) return ResponseEntity.badRequest().body(null);
 		uService.updateUser(u);
