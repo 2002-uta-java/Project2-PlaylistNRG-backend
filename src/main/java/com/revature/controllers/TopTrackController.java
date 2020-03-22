@@ -51,7 +51,7 @@ public class TopTrackController {
 				int pk = tService.createTopTrack(new TopTrack(index));
 				tService.addTopTrackByUserId(pk, appUser_id);
 			}
-			return ResponseEntity.ok().body("User's top tracks updated!");
+			return ResponseEntity.ok().body(null);
 		} catch (JsonParseException e) {
 			return ResponseEntity.ok().body(e.getMessage());
 		} catch (JsonMappingException e) {
@@ -76,7 +76,7 @@ public class TopTrackController {
 	
 	// Get a group's top tracks.
 	@GetMapping("/toptracks/group/{group_id}")
-	public ResponseEntity<String> getGroupTopTracks(@PathVariable("group_id)") int appGroup_id){
+	public ResponseEntity<String> getGroupTopTracks(@PathVariable("group_id") int appGroup_id){
 		List<TopTrack> spot_ids = tService.getTopTracksByGroupId(appGroup_id);
 		
 		try {
