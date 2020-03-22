@@ -18,14 +18,7 @@
 	<!-- Cross origin configuration -->
 	<!-- TODO: CLOSE THE BLOODY GATES ONCE IT'S DEPLOYED -->
 	
-	<mvc:cors>
-	<mvc:mapping path="/**"
-		allowed-origins="/*"
-		allowed-methods="POST, GET, PUT, OPTIONS, DELETE"
-		allowed-headers="/*"
-		exposed-headers="/*"
-		allow-credentials="false" />
-	</mvc:cors>
+
 
 	<!-- Set up resource location and mapping   -->
 	<mvc:resources location="/WEB-INF/static" mapping="/static/**"></mvc:resources>
