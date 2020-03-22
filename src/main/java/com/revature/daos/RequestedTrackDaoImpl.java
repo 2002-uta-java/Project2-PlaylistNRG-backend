@@ -79,7 +79,7 @@ public class RequestedTrackDaoImpl implements RequestedTrackDao {
 	public void deleteRequestedTrack(int id) {
 		Session s = sf.getCurrentSession();
 		Transaction tx = s.beginTransaction();
-		String sql = "delete from RequestedTrack where requested_track_id = ?";
+		String sql = "delete from Requested_Track where requested_track_id = ?";
 		SQLQuery q = s.createSQLQuery(sql);
 		q.setParameter(0, id);
 		q.executeUpdate();
