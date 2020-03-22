@@ -96,9 +96,13 @@ public class UserController {
 	//Update User
 	@PutMapping("/user/update/{appUser_id}")
 	public ResponseEntity<?> updateUser(@PathVariable("appUser_id") int appUser_id) {
+		System.out.println("Start of updateUser");
 		User u = uService.getUserById(appUser_id);
+		System.out.println("Created user");
 		if (u == null) return ResponseEntity.badRequest().body(null);
+		System.out.println("U is not null/Not a bad request.");
 		uService.updateUser(u);
+		System.out.println("User successfully updated... sending back response.");
 		return ResponseEntity.ok().body("User updated!");
 	}
 	
@@ -107,9 +111,13 @@ public class UserController {
 	public ResponseEntity<?> addUserToGroup(@PathVariable("appUser_id") int appUser_id, 
 			@RequestBody int groupId) 
 	{
+		System.out.println("Start of addusertogroup");
 			User u = uService.getUserById(appUser_id);
+			System.out.println("Created user");
 			if (u == null) return ResponseEntity.badRequest().body("could not add user to group");
+			System.out.println("U is not null/Not a bad request");
 			uService.addUserToGroup(u, groupId);
+			System.out.println("user successfully added to group... sending back response.");
 			return ResponseEntity.ok().body(null);
 	}
 	
