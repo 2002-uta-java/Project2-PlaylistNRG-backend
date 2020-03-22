@@ -24,6 +24,7 @@ import com.revature.models.Group;
 import com.revature.models.RequestedTrack;
 import com.revature.models.TopTrack;
 import com.revature.models.User;
+import com.revature.services.GroupService;
 import com.revature.services.RequestedTrackService;
 
 
@@ -43,7 +44,6 @@ public class RequestedTrackController {
 		try {
 			RequestedTrack g = mapper.readValue(request, RequestedTrack.class);
 			g.setEmployeeId(appUser_id);
-			System.out.println(g);
 			rService.createRequestedTrack(g);
 			return ResponseEntity.ok().body(null);
 		} catch (JsonProcessingException e) {
@@ -55,9 +55,46 @@ public class RequestedTrackController {
 		}		
 	}
 	
+	//Get Requests by group
+	@GetMapping("/request/{group_id}")
+	public ResponseEntity<String> getRequestedTracksbyID(@PathVariable("group_id") int group_id){
+		List<RequestedTrack> reqs = rService.getRequestedTracksByGroupId(group_id);
+		
+		try {
+			return ResponseEntity.ok().body( "{ \"RequestedTracks\": "+mapper.writeValueAsString(reqs)+"}");
+		} catch (JsonProcessingException e) {
+			//return exception message on failure
+			return ResponseEntity.ok().body(e.getMessage());
+		}
+	}
+	
+	
 	//Update Request
+	@PutMapping("/request/{rtrack_id}")
+	public ResponseEntity<String> updateRequestedTrack(@PathVariable("rtrack_id") int rtrack_id,
+			@RequestBody String request){
+		
+		try {
+			RequestedTrack r = mapper.readValue(request, RequestedTrack.class);
+			r.setEmployeeId(rtrack_id);
+			rService.updateRequestedTrack(r);
+			return ResponseEntity.ok().body(null);
+		} catch (JsonProcessingException e) {
+			// return exception message on failure
+			return ResponseEntity.ok().body(e.getMessage());
+		} catch (IOException e) {
+			// return exception message on failure
+			return ResponseEntity.ok().body(e.getMessage());
+		}	
+
+	}
+	
 	
 	//Delete Request
-	
-	//Get Request by group
+	@PutMapping("/request/d/{rtrack_id}")
+	public ResponseEntity<String> deleteRequestedTrack(@PathVariable("rtrack_id") int rtrack_id){
+		rService.deleteRequestedTrack(rtrack_id);
+		return ResponseEntity.ok().body(null);
+	}
+
 }
