@@ -81,6 +81,13 @@ public class TopTrackDaoImpl implements TopTrackDao {
 		SQLQuery q = s.createSQLQuery(sql);
 		q.setParameter(0, id);
 		q.executeUpdate();
+		
+		
+		//clean abandoned tracks
+		sql = "delete from top_track tt where tt.top_track_id  not in (select ett.top_track_id from employee_top_track ett)";
+		q = s.createSQLQuery(sql);
+		q.executeUpdate();
+		
 		tx.commit();
 	}
 	
