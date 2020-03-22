@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import com.revature.models.Group;
 import com.revature.models.User;
 import com.revature.services.UserService;
 
+@CrossOrigin
 @RestController
 public class UserController {
 	ObjectMapper mapper = new ObjectMapper();
@@ -93,7 +95,7 @@ public class UserController {
 
 	//Update User
 	@PutMapping("/user/update/{appUser_id}")
-	public ResponseEntity<?>  updateUser(@PathVariable("appUser_id") int appUser_id) {
+	public ResponseEntity<?> updateUser(@PathVariable("appUser_id") int appUser_id) {
 		User u = uService.getUserById(appUser_id);
 		if (u == null) return ResponseEntity.badRequest().body(null);
 		uService.updateUser(u);
