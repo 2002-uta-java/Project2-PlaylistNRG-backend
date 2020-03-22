@@ -62,5 +62,29 @@ public class RequestedTrackDaoImpl implements RequestedTrackDao {
 		List<RequestedTrack> rTracks = q.list();
 		return rTracks;
 	}
+	
+	@Transactional(propagation=Propagation.SUPPORTS)
+	@Override
+	public RequestedTrack getRequestedTracksById(int id) {
+		Session s = sf.getCurrentSession();
+		String hql = "from RequestedTrack where requested_track_id = :rId";
+		Query q = s.createQuery(hql);
+		q.setParameter("rId", id);
+		List<RequestedTrack> rTracks = q.list();
+		return rTracks.get(0);
+	}
+	
+	@Transactional(propagation=Propagation.SUPPORTS)
+	@Override
+	public void deleteRequestedTrack(int id) {
+		Session s = sf.getCurrentSession();
+		Transaction tx = s.beginTransaction();
+		String sql = "delete from Requested_Track where requested_track_id = ?";
+		SQLQuery q = s.createSQLQuery(sql);
+		q.setParameter(0, id);
+		q.executeUpdate();
+		tx.commit();
+		
+	}
 
 }

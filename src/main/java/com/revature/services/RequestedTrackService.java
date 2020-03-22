@@ -39,12 +39,20 @@ public class RequestedTrackService {
 		return rTracks;
 	}
 	
+	public RequestedTrack getRequestedTrackById(int rid) {
+		return rDao.getRequestedTracksById(rid);
+	}
+	
 	public int createRequestedTrack(RequestedTrack r) {
 		return rDao.createRequestedTrack(r);
 	}
 	
 	public void updateRequestedTrack(RequestedTrack r) {
 		rDao.updateRequestedTrack(r);
+	}
+	
+	public void deleteRequestedTrack(int rid) {
+		rDao.deleteRequestedTrack(rid);
 	}
 	
 }
