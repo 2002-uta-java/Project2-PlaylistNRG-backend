@@ -32,6 +32,9 @@ private static final long serialVersionUID = 1L;
 	@Column(name="spotify_track_id")
 	private String spotifyTrackId;
 	
+	@Column(name="spotify_popularity")
+	private int spotifyPopularity;
+	
 	@ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "employee_top_track", joinColumns = { @JoinColumn(name = "top_track_id") },
     								inverseJoinColumns = { @JoinColumn(name = "appUser_id") })
@@ -44,6 +47,12 @@ private static final long serialVersionUID = 1L;
 	public TopTrack(String spotifyTrackId) {
 		super();
 		this.spotifyTrackId = spotifyTrackId;
+	}
+
+	public TopTrack(String spotifyTrackId, int spotifyPopularity) {
+		super();
+		this.spotifyTrackId = spotifyTrackId;
+		this.spotifyPopularity = spotifyPopularity;
 	}
 
 	public int getId() {
@@ -60,6 +69,14 @@ private static final long serialVersionUID = 1L;
 
 	public void setSpotifyTrackId(String spotifyTrackId) {
 		this.spotifyTrackId = spotifyTrackId;
+	}
+
+	public int getSpotifyPopularity() {
+		return spotifyPopularity;
+	}
+
+	public void setSpotifyPopularity(int spotifyPopularity) {
+		this.spotifyPopularity = spotifyPopularity;
 	}
 
 	@Override

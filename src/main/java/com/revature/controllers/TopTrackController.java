@@ -45,10 +45,10 @@ public class TopTrackController {
 		
 		try {
 			//parse array of id
-			List<String> arr = mapper.readValue(top_track_arr, new TypeReference<List<String>>(){});
+			List<TopTrack> arr = mapper.readValue(top_track_arr, new TypeReference<List<TopTrack>>(){});
 			
-			for(String index : arr) {
-				int pk = tService.createTopTrack(new TopTrack(index));
+			for(TopTrack index : arr) {
+				int pk = tService.createTopTrack(new TopTrack(index.getSpotifyTrackId(),index.getSpotifyPopularity()));
 				tService.addTopTrackByUserId(pk, appUser_id);
 			}
 			return ResponseEntity.ok().body(null);
