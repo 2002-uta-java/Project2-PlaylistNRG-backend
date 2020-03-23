@@ -69,6 +69,34 @@ public class User implements Serializable {
 	public String toString() {
 		return "User [id=" + id + ", spotifyId=" + spotifyId + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		result = prime * result + ((spotifyId == null) ? 0 : spotifyId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (id != other.id)
+			return false;
+		if (spotifyId == null) {
+			if (other.spotifyId != null)
+				return false;
+		} else if (!spotifyId.equals(other.spotifyId))
+			{return false;}
+		return true;
+	}
 	
 	
 }
