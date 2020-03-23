@@ -1,7 +1,6 @@
 package com.revature.services;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class RequestedTrackService {
 		List<RequestedTrack> rTracks = new ArrayList<>();
 		
 		if (userIds == null) {
-			return Collections.emptyList();
+			return null;
 		}
 		else {
 			for (int uId: userIds) {
@@ -40,20 +39,12 @@ public class RequestedTrackService {
 		return rTracks;
 	}
 	
-	public RequestedTrack getRequestedTrackById(int rid) {
-		return rDao.getRequestedTracksById(rid);
-	}
-	
 	public int createRequestedTrack(RequestedTrack r) {
 		return rDao.createRequestedTrack(r);
 	}
 	
 	public void updateRequestedTrack(RequestedTrack r) {
 		rDao.updateRequestedTrack(r);
-	}
-	
-	public void deleteRequestedTrack(int rid) {
-		rDao.deleteRequestedTrack(rid);
 	}
 	
 }

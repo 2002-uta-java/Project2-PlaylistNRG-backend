@@ -1,7 +1,6 @@
 package com.revature.services;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class TopTrackService {
 		List<TopTrack> topTracks = new ArrayList<>();
 		
 		if (userIds == null) {
-			return Collections.emptyList();
+			return null;
 		}
 		else {
 			List<Integer> topTrackIds = new ArrayList<>();

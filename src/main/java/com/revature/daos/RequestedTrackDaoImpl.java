@@ -34,12 +34,11 @@ public class RequestedTrackDaoImpl implements RequestedTrackDao {
 	@Override
 	public void updateRequestedTrack(RequestedTrack r) {
 		Session s = sf.getCurrentSession();
-		System.out.println(r);
 		Transaction tx = s.beginTransaction();
 		String hql = "update RequestedTrack set "
-				+ "spotifyTrackId = :spotifyTrackId, "
-				+ "spotifyPopularity = :spotifyPopularity, "
-				+ "employeeId = :employeeId, "
+				+ "spotify_track_id = :spotifyTrackId,"
+				+ "spotify_popularity = :spotifyPopularity,"
+				+ "employee_id = :employeeId,"
 				+ "status = :status "
 				+ "where id = :id";
 		Query q = s.createQuery(hql);
@@ -60,32 +59,8 @@ public class RequestedTrackDaoImpl implements RequestedTrackDao {
 		String hql = "from RequestedTrack where employee_id = :eId";
 		Query q = s.createQuery(hql);
 		q.setParameter("eId", id);
-		return q.list();
-
-	}
-	
-	@Transactional(propagation=Propagation.SUPPORTS)
-	@Override
-	public RequestedTrack getRequestedTracksById(int id) {
-		Session s = sf.getCurrentSession();
-		String sql = "from Requested_Track where requested_track_id = :rId";
-		SQLQuery q = s.createSQLQuery(sql);
-		q.setParameter("rId", id);
 		List<RequestedTrack> rTracks = q.list();
-		return rTracks.get(0);
-	}
-	
-	@Transactional(propagation=Propagation.SUPPORTS)
-	@Override
-	public void deleteRequestedTrack(int id) {
-		Session s = sf.getCurrentSession();
-		Transaction tx = s.beginTransaction();
-		String sql = "delete from Requested_Track where requested_track_id = ?";
-		SQLQuery q = s.createSQLQuery(sql);
-		q.setParameter(0, id);
-		q.executeUpdate();
-		tx.commit();
-		
+		return rTracks;
 	}
 
 }
