@@ -1,27 +1,35 @@
 package com.revature.models;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+
 @Component
 @Entity
+@Table(name="appGroup")
 public class Group implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="group_id")
+	@Column(name="app_Group_id")
 	private int id;
 	
-	@Column(name="group_name")
+	@Column(name="app_Group_name")
 	private String name;
 	
 	@Column(name="passcode")
@@ -29,6 +37,22 @@ public class Group implements Serializable {
 	
 	@Column(name="manager_id")
 	private int managerId;
+	
+	@ManyToMany(cascade = CascadeType.REMOVE)
+    @JoinTable(name = "appGroup_appUser", joinColumns = { @JoinColumn(name = "app_group_id") }, 
+    inverseJoinColumns = { @JoinColumn(name = "app_user_id") })
+    private List<User> usersG;
+	
+	public Group() {
+		super();
+	}
+	
+	public Group(String name, String passcode, int managerId) {
+		super();
+		this.name = name;
+		this.passcode = passcode;
+		this.managerId = managerId;
+	}
 	
 	public Group (int id, String name, String passcode, int managerId) {
 		super();

@@ -1,12 +1,14 @@
 package com.revature.services;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.daos.UserDao;
+import com.revature.models.Group;
 import com.revature.models.User;
 
 @Service
@@ -23,21 +25,27 @@ public class UserService {
 		return uDao.getUserById(id);
 	}
 	
+	public User getUserBySpotifyId(String  spotifyId) {
+		return uDao.getUserBySpotId(spotifyId);
+	}
+	
 	public List<User> getUsersByGroupId(int groupId) {
 		List<Integer> userIds = uDao.getUserIdsByGroupId(groupId);
 		List<User> users = new ArrayList<>();
 		
 		if (userIds == null) {
-			return null;
+			return Collections.emptyList();
 		}
 		else {
 			for (int uId: userIds) {
 				users.add(uDao.getUserById(uId));
 			}
 		}
-		
-		return users;
-		
+		return users;	
+	}
+	
+	public List<Group> groupsByUser(int id){
+		return uDao.getAssociatedGroups(id);
 	}
 	
 	public int createUser(User u) {

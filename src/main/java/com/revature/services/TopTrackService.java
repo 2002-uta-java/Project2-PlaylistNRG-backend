@@ -1,6 +1,7 @@
 package com.revature.services;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class TopTrackService {
 		List<TopTrack> topTracks = new ArrayList<>();
 		
 		if (userIds == null) {
-			return null;
+			return Collections.emptyList();
 		}
 		else {
 			List<Integer> topTrackIds = new ArrayList<>();
@@ -53,6 +54,9 @@ public class TopTrackService {
 		return tDao.createTopTrack(t);
 	}
 	
+	public void addTopTrackByUserId(int tId, int uId) {
+		tDao.addTopTrackByUserId(tId, uId);
+	}
 	
 	public void deleteTopTracksByUserId(int id) {
 		// Note: You can delete a user/track in the toptrack_user bridge table, but cannot delete
@@ -61,5 +65,9 @@ public class TopTrackService {
 		// In the long run, this could lead to massive unnecessary memory usage, but who cares.
 		// Fix: Function that deletes all tracks that no users refer to.
 		tDao.deleteTopTracksByUserId(id);
+	}
+	
+	public List<String> getUsersSpotifyTracks(int uid){
+		return tDao.getSpotifyTrackIdsByUserId(uid);
 	}
 }

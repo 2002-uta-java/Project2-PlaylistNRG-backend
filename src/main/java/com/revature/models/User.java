@@ -1,29 +1,49 @@
 package com.revature.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
 @Component
 @Entity
+@Table(name="appUser")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="app_User_id")
 	private int id;
 	
-	@Column(name="spotify_id")
-	private int spotifyId;
+	@Column(name="spotify_id", unique = true, nullable = false)
+	private String spotifyId;
 	
-	public User(int id, int spotifyId) {
+	@ManyToMany(mappedBy = "usersG")
+	private List<Group> groups; 
+	
+	@ManyToMany(mappedBy = "usersT") 
+	private List<TopTrack> topTracks; 
+	
+	public User() {
+		super();
+	}
+	
+	public User(String spotifyId) {
+		super();
+		this.spotifyId = spotifyId;
+	}
+	
+	public User(int id, String spotifyId) {
 		super();
 		this.id = id;
 		this.spotifyId = spotifyId;
@@ -37,11 +57,11 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
-	public int getSpotifyId() {
+	public String getSpotifyId() {
 		return spotifyId;
 	}
 
-	public void setSpotifyId(int spotifyId) {
+	public void setSpotifyId(String spotifyId) {
 		this.spotifyId = spotifyId;
 	}
 
