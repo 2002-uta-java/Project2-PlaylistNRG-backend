@@ -62,7 +62,7 @@ public class RequestedTrackController {
 		
 		try {
 			RequestedTrack r = mapper.readValue(request, RequestedTrack.class);
-			r.setEmployeeId(reqTrackId);
+			r.setId(reqTrackId);
 			rService.updateRequestedTrack(r);
 			return ResponseEntity.ok().body(null);
 		} catch (IOException e) {
