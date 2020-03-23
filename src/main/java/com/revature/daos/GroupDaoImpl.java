@@ -24,16 +24,15 @@ public class GroupDaoImpl implements GroupDao {
 	public List<Group> getAllGroups() {
 		Session s = sf.getCurrentSession();
 		String hql = "from Group";
-		List<Group> groups = s.createQuery(hql).list();
-		return groups;
+		return s.createQuery(hql).list();
+
 	}
 
 	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public Group getGroupById(int groupId) {
 		Session s = sf.getCurrentSession();
-		Group g = (Group) s.get(Group.class, groupId);
-		return g;
+		return (Group) s.get(Group.class, groupId);
 	}
 
 	@Transactional(propagation=Propagation.SUPPORTS)
@@ -53,8 +52,8 @@ public class GroupDaoImpl implements GroupDao {
 		String hql = "from Group where passcode = :ps";
 		Query q = s.createQuery(hql);
 		q.setParameter("ps", passcode);
-		Group g  = (Group) q.list().get(0);
-		return g;
+		return (Group) q.list().get(0);
+
 	}
 	
 	

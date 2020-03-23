@@ -1,6 +1,7 @@
 package com.revature.services;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class UserService {
 		return uDao.getUserById(id);
 	}
 	
-	public User getUserBySpotifyId(String  spotify_id) {
-		return uDao.getUserBySpotId(spotify_id);
+	public User getUserBySpotifyId(String  spotifyId) {
+		return uDao.getUserBySpotId(spotifyId);
 	}
 	
 	public List<User> getUsersByGroupId(int groupId) {
@@ -33,7 +34,7 @@ public class UserService {
 		List<User> users = new ArrayList<>();
 		
 		if (userIds == null) {
-			return null;
+			return Collections.emptyList();
 		}
 		else {
 			for (int uId: userIds) {
