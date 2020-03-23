@@ -23,30 +23,28 @@ public class TopTrackDaoImpl implements TopTrackDao {
 	@Override
 	public List<Integer> getTopTrackIdsByUserId(int uId) {
 		Session s = sf.getCurrentSession();
-		String sql = "select top_track_id from employee_top_track where appUser_id = ?";
+		String sql = "select top_track_id from employee_top_track where app_User_id = ?";
 		SQLQuery q = s.createSQLQuery(sql);
 		q.setParameter(0, uId);
-		List<Integer> topTrackIds = q.list();
-		return topTrackIds;
+		return q.list();
+
 	}
 	
 	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public List<String> getSpotifyTrackIdsByUserId(int uId) {
 		Session s = sf.getCurrentSession();
-		String sql = "select a.spotify_track_id from top_track a join employee_top_track e   on a.top_track_id = e.top_track_id where e.appuser_id = ? ";
+		String sql = "select a.spotify_track_id from top_track a join employee_top_track e   on a.top_track_id = e.top_track_id where e.app_user_id = ? ";
 		SQLQuery q = s.createSQLQuery(sql);
 		q.setParameter(0, uId);
-		List<String> spotify_track_ids = q.list();
-		return spotify_track_ids;
+		return q.list();
 	}
 
 	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
 	public TopTrack getTopTrackByTrackId(int id) {
 		Session s = sf.getCurrentSession();
-		TopTrack t = (TopTrack) s.get(TopTrack.class, id);
-		return t;
+		return (TopTrack) s.get(TopTrack.class, id);
 	}
 
 	@Transactional(propagation=Propagation.SUPPORTS)
@@ -64,7 +62,7 @@ public class TopTrackDaoImpl implements TopTrackDao {
 	public void addTopTrackByUserId(int tId, int uId) { //issue here
 		Session s = sf.getCurrentSession();
 		Transaction tx = s.beginTransaction();
-		String sql = "insert into employee_top_track (appUser_id, top_track_id) values (?, ?)";
+		String sql = "insert into employee_top_track (app_User_id, top_track_id) values (?, ?)";
 		SQLQuery q = s.createSQLQuery(sql);
 		q.setParameter(0, uId);
 		q.setParameter(1, tId);
@@ -77,7 +75,7 @@ public class TopTrackDaoImpl implements TopTrackDao {
 	public void deleteTopTracksByUserId(int id) {
 		Session s = sf.getCurrentSession();
 		Transaction tx = s.beginTransaction();
-		String sql = "delete from employee_top_track where appUser_id = ?";
+		String sql = "delete from employee_top_track where app_User_id = ?";
 		SQLQuery q = s.createSQLQuery(sql);
 		q.setParameter(0, id);
 		q.executeUpdate();

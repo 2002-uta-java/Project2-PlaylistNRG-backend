@@ -7,13 +7,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
@@ -28,10 +26,10 @@ public class Group implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="appGroup_id")
+	@Column(name="app_Group_id")
 	private int id;
 	
-	@Column(name="appGroup_name")
+	@Column(name="app_Group_name")
 	private String name;
 	
 	@Column(name="passcode")
@@ -41,8 +39,9 @@ public class Group implements Serializable {
 	private int managerId;
 	
 	@ManyToMany(cascade = CascadeType.REMOVE)
-    @JoinTable(name = "appGroup_appUser", joinColumns = { @JoinColumn(name = "appGroup_id") }, inverseJoinColumns = { @JoinColumn(name = "appUser_id") })
-    private List<User> users_g;
+    @JoinTable(name = "appGroup_appUser", joinColumns = { @JoinColumn(name = "app_group_id") }, 
+    inverseJoinColumns = { @JoinColumn(name = "app_user_id") })
+    private List<User> usersG;
 	
 	public Group() {
 		super();

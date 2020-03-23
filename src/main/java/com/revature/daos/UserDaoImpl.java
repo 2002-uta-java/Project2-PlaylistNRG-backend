@@ -8,7 +8,6 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -28,8 +27,7 @@ public class UserDaoImpl implements UserDao {
 	public List<User> getAllUsers() {
 		Session s = sf.getCurrentSession();
 		String hql = "from User";
-		List<User> users = s.createQuery(hql).list();
-		return users;
+		return s.createQuery(hql).list();
 	}
 
 	@Transactional(propagation=Propagation.SUPPORTS)
@@ -37,8 +35,7 @@ public class UserDaoImpl implements UserDao {
 	public User getUserById(int id) {
 		// Will return null if id not in db.
 		Session s = sf.getCurrentSession();
-		User u = (User) s.get(User.class, id);
-		return u;
+		return (User) s.get(User.class, id);
 	}
 
 	@Transactional(propagation=Propagation.SUPPORTS)
@@ -57,7 +54,7 @@ public class UserDaoImpl implements UserDao {
 		Session s = sf.getCurrentSession();
 		Transaction tx = s.beginTransaction();
 		String hql = "update User set "
-				+ "spotify_id = :spotifyId "
+				+ "spotifyId = :spotifyId "
 				+ "where id = :id";
 		Query q = s.createQuery(hql);
 		q.setParameter("id", u.getId());
@@ -76,11 +73,11 @@ public class UserDaoImpl implements UserDao {
 		// Update: We now have bridge tables that hibernate is aware of.
 		// But at this point, I don't feel like changing the SQL to HQL.
 		Session s = sf.getCurrentSession();
-		String sql = "select appUser_id from appGroup_appUser where appGroup_id = ?";
+		String sql = "select app_User_id from appGroup_appUser where app_Group_id = ?";
 		SQLQuery q = s.createSQLQuery(sql);
 		q.setParameter(0, groupId);
-		List<Integer> userIds = q.list();
-		return userIds;
+		return  q.list();
+
 	}
 
 	@Transactional(propagation=Propagation.SUPPORTS)
@@ -88,7 +85,7 @@ public class UserDaoImpl implements UserDao {
 	public void addUserToGroup(User u, int groupId) {
 		Session s = sf.getCurrentSession();
 		Transaction tx = s.beginTransaction();
-		String sql = "insert into appGroup_appUser (appUser_id,appGroup_id) values (?, ?)";
+		String sql = "insert into appGroup_appUser (app_User_id,app_Group_id) values (?, ?)";
 		SQLQuery q = s.createSQLQuery(sql);
 		q.setParameter(0, u.getId());
 		q.setParameter(1, groupId);
@@ -102,7 +99,7 @@ public class UserDaoImpl implements UserDao {
 		// Will probably get exception if any parameters don't exist in the table.
 		Session s = sf.getCurrentSession();
 		Transaction tx = s.beginTransaction();
-		String sql = "delete from appGroup_appUser where appGroup_id = ? and appUser_id = ?";
+		String sql = "delete from appGroup_appUser where app_Group_id = ? and app_User_id = ?";
 		SQLQuery q = s.createSQLQuery(sql);
 		q.setParameter(0, groupId);
 		q.setParameter(1, u.getId());
@@ -112,15 +109,14 @@ public class UserDaoImpl implements UserDao {
 	
 	@Transactional(propagation=Propagation.SUPPORTS)
 	@Override
-	public User getUserBySpotId(String spotify_id) {
-		//TODO: implement front response to multiple appUsers attached to one spotify account?
+	public User getUserBySpotId(String spotifyId) {
 		Session s  = sf.getCurrentSession();
-		String hql ="from User where spotify_id = :sid";
+		String hql ="from User where spotifyId = :sid";
 		Query q = s.createQuery(hql);
-		q.setParameter("sid", spotify_id);
+		q.setParameter("sid", spotifyId);
 		List<User> users = q.list();
 		
-		if (users.size() == 0) return null;
+		if (users.isEmpty()) return null;
 		else return users.get(0);
 	
 	}
@@ -129,13 +125,11 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<Group> getAssociatedGroups(int id) {
 		Session s  = sf.getCurrentSession();
-		String sql ="select * from appGroup_appUser where appUser_id = ?";
+		String sql ="select * from appGroup_appUser where app_User_id = ?";
 		SQLQuery q = s.createSQLQuery(sql);
 		q.setParameter(0, id);
-		List<Group> groups = q.list();
-		
-		if(groups.size() == 0) return null;
-		else return groups;
+		return q.list();
+
 	}
 	
 }

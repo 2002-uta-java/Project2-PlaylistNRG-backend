@@ -22,17 +22,17 @@ public class User implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="appUser_id")
+	@Column(name="app_User_id")
 	private int id;
 	
 	@Column(name="spotify_id", unique = true, nullable = false)
 	private String spotifyId;
 	
-	@ManyToMany(mappedBy = "users_g")
+	@ManyToMany(mappedBy = "usersG")
 	private List<Group> groups; 
 	
-	@ManyToMany(mappedBy = "users_t") 
-	private List<TopTrack> top_tracks; 
+	@ManyToMany(mappedBy = "usersT") 
+	private List<TopTrack> topTracks; 
 	
 	public User() {
 		super();
