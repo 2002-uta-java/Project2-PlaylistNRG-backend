@@ -26,7 +26,7 @@ public class GroupService {
 		return gDao.createGroup(g);
 	}
 
-	public Group getGroupByPasscode(String group_passcode) {
-		return gDao.getGroupByPasscode(group_passcode);
+	public Group getGroupByPasscode(String groupPasscode) {
+		return gDao.getGroupByPasscode(groupPasscode);
 	}
 }

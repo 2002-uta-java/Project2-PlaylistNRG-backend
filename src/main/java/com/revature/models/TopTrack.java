@@ -1,7 +1,6 @@
 package com.revature.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -37,8 +36,8 @@ private static final long serialVersionUID = 1L;
 	
 	@ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "employee_top_track", joinColumns = { @JoinColumn(name = "top_track_id") },
-    								inverseJoinColumns = { @JoinColumn(name = "appUser_id") })
-    private List<User> users_t;
+    								inverseJoinColumns = { @JoinColumn(name = "app_user_id") })
+    private List<User> usersT;
 	
 	public TopTrack() {
 		super();
@@ -100,13 +99,15 @@ private static final long serialVersionUID = 1L;
 			if (other.spotifyTrackId != null)
 				return false;
 		} else if (!spotifyTrackId.equals(other.spotifyTrackId))
-			return false;
+			{
+				return false;
+			}
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "TopTrack [id=" + id + ", spotifyTrackId=" + spotifyTrackId + ", users_t=" + users_t + "]";
+		return "TopTrack [id=" + id + ", spotifyTrackId=" + spotifyTrackId + ", usersT=" + usersT + "]";
 	}
 
 }
