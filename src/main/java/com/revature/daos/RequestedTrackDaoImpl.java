@@ -34,11 +34,12 @@ public class RequestedTrackDaoImpl implements RequestedTrackDao {
 	@Override
 	public void updateRequestedTrack(RequestedTrack r) {
 		Session s = sf.getCurrentSession();
+		System.out.println(r);
 		Transaction tx = s.beginTransaction();
 		String hql = "update RequestedTrack set "
-				+ "spotify_track_id = :spotifyTrackId,"
-				+ "spotify_popularity = :spotifyPopularity,"
-				+ "employee_id = :employeeId,"
+				+ "spotifyTrackId = :spotifyTrackId, "
+				+ "spotifyPopularity = :spotifyPopularity, "
+				+ "employeeId = :employeeId, "
 				+ "status = :status "
 				+ "where id = :id";
 		Query q = s.createQuery(hql);
