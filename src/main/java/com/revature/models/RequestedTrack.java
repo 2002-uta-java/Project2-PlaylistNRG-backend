@@ -101,5 +101,31 @@ public class RequestedTrack implements Serializable {
 		return "RequestedTrack [id=" + id + ", spotifyTrackId=" + spotifyTrackId + ", spotifyPopularity="
 				+ spotifyPopularity + ", employeeId=" + employeeId + ", status=" + status + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((spotifyTrackId == null) ? 0 : spotifyTrackId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RequestedTrack other = (RequestedTrack) obj;
+		if (spotifyTrackId == null) {
+			if (other.spotifyTrackId != null)
+				return false;
+		} else if (!spotifyTrackId.equals(other.spotifyTrackId))
+			{return false;}
+		return true;
+	}
+	
 	
 }
